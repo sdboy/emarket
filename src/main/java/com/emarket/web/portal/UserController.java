@@ -27,7 +27,7 @@ public class UserController {
    * @author jiaoguang
    * @create 2018/4/7 23:08
    * @modifier jiaoguang
-   * $modify 2018/4/7 23:08
+   * @modify 2018/4/7 23:08
    * @param [username, password, session]
    * @return com.emarket.common.ServerResponse<com.emarket.bean.User>
    * @since 1.0
@@ -48,7 +48,7 @@ public class UserController {
    * @author jiaoguang
    * @create 2018/4/8 22:47
    * @modifier jiaoguang
-   * $modify 2018/4/8 22:47
+   * @modify 2018/4/8 22:47
    * @param [session]
    * @return com.emarket.common.ServerResponse<java.lang.String>
    * @since V1.0.0
@@ -66,7 +66,7 @@ public class UserController {
    * @author jiaoguang
    * @create 2018/4/8 22:47
    * @modifier jiaoguang
-   * $modify 2018/4/8 22:47
+   * @modify 2018/4/8 22:47
    * @param [user]
    * @return com.emarket.common.ServerResponse<java.lang.String>
    * @since V1.0.0
@@ -83,7 +83,7 @@ public class UserController {
    * @author jiaoguang
    * @create 2018/4/8 23:33
    * @modifier jiaoguang
-   * $modify 2018/4/8 23:33
+   * @modify 2018/4/8 23:33
    * @param [str, type]
    * @return com.emarket.common.ServerResponse<java.lang.String>
    * @since V1.0.0

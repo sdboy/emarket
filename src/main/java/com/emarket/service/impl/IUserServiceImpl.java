@@ -23,7 +23,7 @@ public class IUserServiceImpl implements IUserService{
    * @author jiaoguang
    * @create 2018/4/7 23:09
    * @modifier jiaoguang
-   * $modify 2018/4/7 23:09
+   * @modify 2018/4/7 23:09
    * @param [username, password]
    * @return com.emarket.common.ServerResponse<com.emarket.bean.User>
    * @since 1.0
@@ -34,7 +34,6 @@ public class IUserServiceImpl implements IUserService{
     if(resultCount == 0){
       return ServerResponse.createByErrorMessage("用户名不存在");
     }
-    // TODO md5密码加密
     String md5Password = MD5Util.MD5EncodeUtf8(password);
     User user = userMapper.selectLogin(username, md5Password);
     if(user == null) {
@@ -51,7 +50,7 @@ public class IUserServiceImpl implements IUserService{
    * @author jiaoguang
    * @create 2018/4/8 22:48
    * @modifier jiaoguang
-   * $modify 2018/4/8 22:48
+   * @modify 2018/4/8 22:48
    * @param [user]
    * @return com.emarket.common.ServerResponse<java.lang.String>
    * @since V1.0.0
@@ -82,7 +81,7 @@ public class IUserServiceImpl implements IUserService{
    * @author jiaoguang
    * @create 2018/4/8 23:38
    * @modifier jiaoguang
-   * $modify 2018/4/8 23:38
+   * @modify 2018/4/8 23:38
    * @param [str, type]
    * @return com.emarket.common.ServerResponse<java.lang.String>
    * @since V1.0.0
