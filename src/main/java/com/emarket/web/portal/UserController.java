@@ -92,4 +92,19 @@ public class UserController {
   public ServerResponse<String> checkValid(String str, String type) {
     return iUserService.checkValid(str, type);
   }
+  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @ResponseBody
+  public ServerResponse<String> forgetGetQuestion(String username) {
+    return iUserService.selectQuestion(username);
+  }
+  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @ResponseBody
+  public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
+    return iUserService.checkAnswer(username, question, answer);
+  }
+  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @ResponseBody
+  public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
+    return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
+  }
 }

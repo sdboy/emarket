@@ -107,4 +107,21 @@
   <select id="checkEmail" resultType="int" parameterType="string">
     SELECT count(1) FROM mmall_user WHERE email = #{email, jdbcType=VARCHAR}
   </select>
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    SELECT question FROM mmall_user WHERE username = #{username, jdbcType=VARCHAR}
+  </select>
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT
+      count(1)
+    FROM mmall_user
+    WHERE username = #{username, jdbcType=VARCHAR}
+    AND question = #{question, jdbcType=VARCHAR}
+    AND answer = #{answer, jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updatePasswordByUsername" parameterType="map">
+    UPDATE mmall_user
+    SET password = #{passwordNew, jdbcType=VARCHAR}, update_time = now()
+    WHERE username = #{username, jdbcType=VARCHAR}
+  </update>
 </mapper>
