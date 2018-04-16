@@ -92,19 +92,64 @@ public class UserController {
   public ServerResponse<String> checkValid(String str, String type) {
     return iUserService.checkValid(str, type);
   }
-  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @RequestMapping (value = "forgetGetQuestion.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
   @ResponseBody
   public ServerResponse<String> forgetGetQuestion(String username) {
     return iUserService.selectQuestion(username);
   }
-  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @RequestMapping (value = "forgetCheckAnswer.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
   @ResponseBody
   public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
     return iUserService.checkAnswer(username, question, answer);
   }
-  @RequestMapping (value = "checkValid.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @RequestMapping (value = "forgetResetPassword.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
   @ResponseBody
+  /**
+   * <p>忘记密码状态下重置密码</p>
+   * @method forgetResetPassword
+   * @author jiaoguang
+   * @create 2018/4/12 21:56
+   * @modifier jiaoguang
+   * @modify 2018/4/12 21:56
+   * @param [username, passwordNew, forgetToken]
+   * @return com.emarket.common.ServerResponse<java.lang.String>
+   * @since V1.0.0
+   * @version V1.0.0
+   */
   public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
     return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
+  }
+  @RequestMapping (value = "resetPassowrd.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @ResponseBody
+  public ServerResponse<String> resetPassowrd(HttpSession session, String oldPassword, String newPassword) {
+    User user = (User) session.getAttribute(Const.CURRENT_USER);
+    if(user == null) {
+      return ServerResponse.createByErrorMessage("请先登录");
+    }
+    return iUserService.resetPassword(user, oldPassword, newPassword);
+  }
+
+  @RequestMapping (value = "updateUserInfo.do", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+  @ResponseBody
+  public ServerResponse<User> updateUserInfo(HttpSession session, User user) {
+    User curUser = (User) session.getAttribute(Const.CURRENT_USER);
+    if(curUser == null) {
+      return ServerResponse.createByErrorMessage("请先登录");
+    }
+    user.setId(curUser.getId());
+    ServerResponse<User> response = iUserService.updateUserInfo(user);
+    if(response.isSuccess()) {
+      response.getData().setUsername(curUser.getUsername());
+      session.setAttribute(Const.CURRENT_USER, response.getData());
+    }
+    return response;
+  }
+
+  public ServerResponse<User> getUserInfo(HttpSession session) {
+    User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+    if(currentUser == null) {
+      return ServerResponse.createByErrorMessage("请先登录");
+    }
+    return iUserService.getUserInfo(currentUser.getId());
   }
 }

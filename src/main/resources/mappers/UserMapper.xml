@@ -124,4 +124,55 @@
     SET password = #{passwordNew, jdbcType=VARCHAR}, update_time = now()
     WHERE username = #{username, jdbcType=VARCHAR}
   </update>
+
+  <select id="checkPassword" parameterType="map">
+    SELECT COUNT(1)
+    FROM mmall_user
+    WHERE password = #{oldPassword, jdbcType=VARCHAR}
+    AND id = #{userId, jdbcType=INTEGER}
+  </select>
+
+  <update id="updatePasswordByUserId" parameterType="map">
+    UPDATE mmall_user
+        SET password = #{newPassword, jdbcType=VARCHAR}
+    WHERE id = #{userId, jdbcType=INTEGER}
+  </update>
+
+  <select id="checkEmailByUserId" parameterType="map">
+    SELECT COUNT(1)
+    FROM mmall_user
+    WHERE email = #{email, jdbcType=VARCHAR}
+    AND id != #{userId, jdbcType=INTEGER}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.emarket.bean.User">
+    UPDATE mmall_user
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="email != null">
+        email = #{email, jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password, jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone, jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        question = #{question, jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer, jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = now(),
+      </if>
+      <if test="updateTime != null">
+        update_time = now(),
+      </if>
+    </trim>
+    WHERE id = #{id, jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="int">
+
+  </select>
 </mapper>

@@ -158,4 +158,59 @@ public class IUserServiceImpl implements IUserService{
     }
     return ServerResponse.createByErrorMessage("修改密码失败");
   }
+
+  @Override
+  public ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword) {
+    int resultCount = userMapper.checkPassword(user.getId(), MD5Util.MD5EncodeUtf8(oldPassword));
+    if(resultCount < 1) {
+      return ServerResponse.createByErrorMessage("密码不正确");
+    }
+    resultCount = userMapper.updatePasswordByUserId(user.getId(), MD5Util.MD5EncodeUtf8(newPassword));
+    if(resultCount > 1) {
+      return ServerResponse.createBySuccessMessage("重置密码成功");
+    }
+    return ServerResponse.createByErrorMessage("密码更新失败");
+  }
+
+  @Override
+  public ServerResponse<User> updateUserInfo(User user) {
+    int resultCount = userMapper.checkEmailByUserId(user.getId(), user.getEmail());
+    if(resultCount > 0) {
+      return ServerResponse.createByErrorMessage("邮箱已被使用");
+    }
+    User updateUser = new User();
+    updateUser.setId(user.getId());
+    updateUser.setEmail(user.getEmail());
+    updateUser.setPhone(user.getPhone());
+    updateUser.setQuestion(user.getQuestion());
+    updateUser.setAnswer(user.getAnswer());
+    if(!StringUtils.isNotBlank(updateUser.getQuestion()) && StringUtils.isNotBlank(updateUser.getAnswer())) {
+      return ServerResponse.createByErrorMessage("问题不能为空");
+    }
+    if(!StringUtils.isNotBlank(updateUser.getQuestion()) && !StringUtils.isNotBlank(updateUser.getAnswer())) {
+      return ServerResponse.createByErrorMessage("答案不能为空");
+    }
+    resultCount = userMapper.updateByPrimaryKey(updateUser);
+    if(resultCount > 0) {
+      return ServerResponse.createBySuccess("更新成功", updateUser);
+    }
+    return ServerResponse.createByErrorMessage("更新个人信息失败");
+  }
+
+  @Override
+  public ServerResponse<User> getUserInfo(int userId) {
+    User user = userMapper.selectByPrimaryKey(userId);
+    if(user == null) {
+      return ServerResponse.createByErrorMessage("找不到当前用户信息");
+    }
+    user.setPassword(StringUtils.EMPTY);
+    return ServerResponse.createBySuccess(user);
+  }
+
+  public ServerResponse checkAdminRole (User user) {
+    if(user != null && user.getRole() == Const.Role.ROLE_ADMIN) {
+      return ServerResponse.createBySuccess();
+    }
+    return ServerResponse.createByError();
+  }
 }

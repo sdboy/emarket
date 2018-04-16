@@ -10,4 +10,8 @@ public interface IUserService {
   ServerResponse<String> selectQuestion(String username);
   ServerResponse<String> checkAnswer(String username, String question, String answer);
   ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);
+  ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword);
+  ServerResponse<User> updateUserInfo(User user);
+  ServerResponse<User> getUserInfo(int userId);
+  ServerResponse checkAdminRole (User user);
 }

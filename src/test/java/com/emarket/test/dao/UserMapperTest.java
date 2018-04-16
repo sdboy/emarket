@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.Assert.*;
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml",
-  "classpath:applicationContext-datasource.xml"})
+  "classpath:applicationContext-datasource.xml",})
 @Transactional(transactionManager = "transactionManager")
 @Rollback(value = true)
 public class UserMapperTest {
