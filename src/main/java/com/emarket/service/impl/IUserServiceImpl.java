@@ -111,6 +111,7 @@ public class IUserServiceImpl implements IUserService{
     return ServerResponse.createBySuccessMessage("校验成功");
   }
 
+  @Override
   public ServerResponse<String> selectQuestion(String username) {
     ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
     if(validResponse.isSuccess()) {
@@ -207,6 +208,7 @@ public class IUserServiceImpl implements IUserService{
     return ServerResponse.createBySuccess(user);
   }
 
+  @Override
   public ServerResponse checkAdminRole (User user) {
     if(user != null && user.getRole() == Const.Role.ROLE_ADMIN) {
       return ServerResponse.createBySuccess();
